@@ -5,9 +5,9 @@
    { 
     // username and password sent from form 
         $botid=$_POST['botid'];
-        $sql = "SELECT * FROM robots WHERE id = '$botid'";
-        $result = mysqli_query($conn,$sql);
-        $count = mysqli_num_rows($result);
+        $sql = "SELECT * FROM robots WHERE id = '$botid' AND password='$_POST['password']'";
+        $result = sqlsrv_query($conn,$sql);
+        $count = sqlsrv_fetch($result);
         //$data=exec("python filename.py 2>&1");;//Placeholder for python output, enter parameters after the file name sperated by single space
         // If result matched $myusername and $mypassword, table row must be 1 row		
         if($count == 1) #home.php code starts here

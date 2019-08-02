@@ -22,15 +22,15 @@
 			$code=$code.chr(mt_rand(65,90));
 			$code=$number.$code;
 			$code=$code.(string)mt_rand(0,9);
-			$result=mysqli_query($conn,"SELECT * FROM robots WHERE id='$code'");
-			$result2=mysqli_num_rows($result);
-			if ($result2!=0) 
+			$result=sqlsrv_query($conn,"SELECT * FROM robots WHERE id='$code'");
+			$result2=mysqli_fetch($result);
+			if ($result2) 
 			{
 				goto A; #generating a new code because the one created isnt unique
 			}
 			else
 			{
-				$sql=mysqli_query($conn,"INSERT INTO robots(id,name,tool,location,state)VALUES('$code','$name','$tool','$loc','$curr')");
+				$sql=sqlsrv_fetch($conn,"INSERT INTO robots(id,name,tool,location,state)VALUES('$code','$name','$tool','$loc','$curr')");
 				if ($sql) #Checking whether insertion has been successful or not
 				{
     				$str=$str."New robot created successfully<br>"; 
@@ -41,7 +41,7 @@
     			} 
     			else 
     			{
-    				$str=$str."Error: " . $sql . "<br>" . $conn->error;
+    				$str=$str."Error" . $sql . "<br>" . $conn->error;
     			}	
 			}	
 		}
